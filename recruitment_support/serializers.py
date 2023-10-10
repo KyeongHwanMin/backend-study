@@ -7,10 +7,4 @@ class RecruitmentSupportSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Support
-        fields = [
-            'company',
-            'recruitment_potion',
-            'recruitment_compensation',
-            'recruitment_content',
-            'skill',
-        ]
+        fields = ['recruitment_notice', 'user']

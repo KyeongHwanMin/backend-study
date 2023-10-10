@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -8,13 +9,15 @@ from recruitment_support.serializers import RecruitmentSupportSerializer
 
 
 class RecruitementSupportView(APIView):
+    permission_classes = [IsAuthenticated]
     def get(self, request):
-        qs = Support.objects.all()
+        qs = Support.objects.filter(user=request.user)
         serializer = RecruitmentSupportSerializer(qs, many=True)
         return Response(serializer.data)
-
     def post(self, request):
-        serializer = RecruitmentSupportSerializer(data=request.data)
+        data = request.data
+        data['user'] = request.user.id
+        serializer = RecruitmentSupportSerializer(data=data)
 
         if serializer.is_valid():
             serializer.save()
