@@ -5,25 +5,50 @@ from company.serializers import CompanySerializer
 
 
 class RecruitmentNoticeSerializer(serializers.ModelSerializer):
-    company = CompanySerializer()
-
-    def create(self, validated_data):
-
-        company_data = validated_data.pop('company')
-        company_instance = Company.objects.get(**company_data)
-        recruitment_notice = Recruitment_Notice.objects.created(company=company_instance, **validated_data)
-
-        return recruitment_notice
+    company_name = serializers.CharField(source='company.company_name', read_only=True)
+    nation = serializers.CharField(source='company.nation', read_only=True)
+    area = serializers.CharField(source='company.area', read_only=True)
 
     class Meta:
         model = Recruitment_Notice
         fields = [
-            'company',
+            'id',  # 또는 'recruitment_notice_id': serializers.IntegerField(source='id', read_only=True)
+            'company_name',
+            'nation',
+            'area',
+            'company',  # POST를 위해 필요
             'recruitment_potion',
             'recruitment_compensation',
             'recruitment_content',
             'skill',
         ]
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation.pop('company', None)  # GET 응답에서 company ID 필드를 제거
+        return representation
+
+
+# class RecruitmentNoticeSerializer(serializers.ModelSerializer):
+#     company = CompanySerializer()
+#
+#     def create(self, validated_data):
+#
+#         company_data = validated_data.pop('company')
+#         company_instance = Company.objects.get(**company_data)
+#         recruitment_notice = Recruitment_Notice.objects.created(company=company_instance, **validated_data)
+#
+#         return recruitment_notice
+#
+#     class Meta:
+#         model = Recruitment_Notice
+#         fields = [
+#             'company',
+#             'recruitment_potion',
+#             'recruitment_compensation',
+#             'recruitment_content',
+#             'skill',
+#         ]
 
 # class RecruitmentNoticeSerializer(serializers.Serializer):
 #     company = serializers.PrimaryKeyRelatedField(queryset=Company.objects.all())  # 이 부분 변경
