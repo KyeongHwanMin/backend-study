@@ -10,4 +10,11 @@ class CompanyView(APIView):
         qs = Company.objects.all()
         serializer = CompanySerializer(qs, many=True)
         return Response(serializer.data)
-    pass
+
+    def post(self, request):
+        serializer = CompanySerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=201)
+        return Response(serializer.errors, status=400)
+
