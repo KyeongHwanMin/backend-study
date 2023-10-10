@@ -1,7 +1,7 @@
 from rest_framework.response import Response
 from company.models import Company
 from rest_framework.views import APIView
-from company.serializers import CompanySerializer
+from company.serializers import CreateCompanySerializer, CompanySerializer
 
 
 class CompanyView(APIView):
@@ -11,7 +11,7 @@ class CompanyView(APIView):
         return Response(serializer.data)
 
     def post(self, request):
-        serializer = CompanySerializer(data=request.data)
+        serializer = CreateCompanySerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=201)

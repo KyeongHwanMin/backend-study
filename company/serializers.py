@@ -11,3 +11,14 @@ class CompanySerializer(ModelSerializer):
             'nation',
             'area'
         ]
+
+
+class CreateCompanySerializer(ModelSerializer):
+    class Meta:
+        model = Company
+        fields = [
+            'id',
+            'company_name',
+            'nation',
+            'area'
+        ]
