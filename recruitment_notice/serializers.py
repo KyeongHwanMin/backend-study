@@ -8,6 +8,7 @@ class RecruitmentNoticeSerializer(ModelSerializer):
         fields = [
             'company',
             'recruitment_potion',
+            'recruitment_compensation',
             'recruitment_content',
             'skill',
 
