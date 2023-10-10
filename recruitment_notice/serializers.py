@@ -5,11 +5,12 @@ from recruitment_notice.models import Recruitment_Notice
 class RecruitmentNoticeSerializer(ModelSerializer):
     class Meta:
         model = Recruitment_Notice
-        fields = [
-            'company',
-            'recruitment_potion',
-            'recruitment_compensation',
-            'recruitment_content',
-            'skill',
-
-        ]
+        fields = '__all__'
+        # fields = [
+        #     'company',
+        #     'recruitment_potion',
+        #     'recruitment_compensation',
+        #     'recruitment_content',
+        #     'skill',
+        #
+        # ]

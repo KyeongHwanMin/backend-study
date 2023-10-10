@@ -16,8 +16,8 @@ class RecruitmentNoticeView(APIView):
         serializer = RecruitmentNoticeSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=201)
-        return Response(serializer.errors, status=400)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class RecruitmentNoticeDetailView(APIView):
@@ -35,4 +35,9 @@ class RecruitmentNoticeDetailView(APIView):
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
-        return Response(serializer.errors, status=400)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk):
+        recruitment_notice_info = self.get_object(pk)
+        recruitment_notice_info.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
