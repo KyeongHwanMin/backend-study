@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Recruitment_Notice(models.Model):
@@ -13,3 +14,11 @@ class Recruitment_Notice(models.Model):
 
     class Meta:
         db_table = "recruitment_notice"
+
+
+class Support_detail(models.Model):
+    user = models.OneToOneField(to=User, on_delete=models.CASCADE)
+    recruitment_notice = models.ForeignKey(to="Recruitment_Notice", null=True, on_delete=models.SET_NULL)
+
+    class Meta:
+        db_table = "support_detail"
