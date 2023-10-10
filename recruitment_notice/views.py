@@ -2,13 +2,13 @@ from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from recruitment_notice.models import Recruitment_Notice
+from recruitment_notice.models import RecruitmentNotice
 from recruitment_notice.serializers import RecruitmentNoticeSerializer, RecruitmentNoticeDetailSerializer
 
 
 class RecruitmentNoticeView(APIView):
     def get(self, request):
-        qs = Recruitment_Notice.objects.all()
+        qs = RecruitmentNotice.objects.all()
         serializer = RecruitmentNoticeSerializer(qs, many=True)
         return Response(serializer.data)
 
@@ -24,7 +24,7 @@ class RecruitmentNoticeView(APIView):
 
 class RecruitmentNoticeDetailView(APIView):
     def get_object(self, pk):
-        return get_object_or_404(Recruitment_Notice, pk=pk)
+        return get_object_or_404(RecruitmentNotice, pk=pk)
 
     def get(self, request, pk, format=None):
         recruitment_notice_info = self.get_object(pk)

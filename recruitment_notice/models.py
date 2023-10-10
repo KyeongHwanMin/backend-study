@@ -1,5 +1,4 @@
 from django.db import models
-from django.contrib.auth.models import User
 
 
 class RecruitmentNotice(models.Model):
@@ -14,6 +13,3 @@ class RecruitmentNotice(models.Model):
 
     class Meta:
         db_table = "recruitment_notice"
-
-
-

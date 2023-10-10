@@ -1,7 +1,5 @@
-from company.models import Company
-from .models import Recruitment_Notice
+from .models import RecruitmentNotice
 from rest_framework import serializers
-from company.serializers import CompanySerializer
 
 
 class RecruitmentNoticeSerializer(serializers.ModelSerializer):
@@ -10,7 +8,7 @@ class RecruitmentNoticeSerializer(serializers.ModelSerializer):
     area = serializers.CharField(source='company.area', read_only=True)
 
     class Meta:
-        model = Recruitment_Notice
+        model = RecruitmentNotice
         fields = [
             'id',  # 또는 'recruitment_notice_id': serializers.IntegerField(source='id', read_only=True)
             'company_name',
@@ -34,7 +32,7 @@ class RecruitmentNoticeSerializer(serializers.ModelSerializer):
         area = serializers.CharField(source='company.area', read_only=True)
 
         class Meta:
-            model = Recruitment_Notice
+            model = RecruitmentNotice
             fields = [
                 'id',  # 또는 'recruitment_notice_id': serializers.IntegerField(source='id', read_only=True)
                 'company_name',
@@ -60,7 +58,7 @@ class RecruitmentNoticeDetailSerializer(serializers.ModelSerializer):
     other_recruitment_notices = serializers.SerializerMethodField()
 
     class Meta:
-        model = Recruitment_Notice
+        model = RecruitmentNotice
         fields = [
             'id',  # 또는 'recruitment_notice_id': serializers.IntegerField(source='id', read_only=True)
             'company_name',
@@ -80,7 +78,7 @@ class RecruitmentNoticeDetailSerializer(serializers.ModelSerializer):
         return representation
 
     def get_other_recruitment_notices(self, obj):
-        other_recruitment_notices = Recruitment_Notice.objects.filter(company=obj.company).exclude(id=obj.id)
+        other_recruitment_notices = RecruitmentNotice.objects.filter(company=obj.company).exclude(id=obj.id)
         return [notice.id for notice in other_recruitment_notices]
 
 # class RecruitmentNoticeSerializer(serializers.ModelSerializer):
