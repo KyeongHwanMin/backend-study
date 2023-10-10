@@ -1,5 +1,4 @@
 from rest_framework.response import Response
-
 from company.models import Company
 from rest_framework.views import APIView
 from company.serializers import CompanySerializer

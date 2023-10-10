@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Recruitment_Notice(models.Model):
     company = models.ForeignKey(to="company.Company", on_delete=models.CASCADE,
                                 related_name="recruitment_notices", help_text="회사 ID")
