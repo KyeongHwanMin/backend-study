@@ -3,7 +3,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from recruitment_notice.models import Recruitment_Notice
-from recruitment_notice.serializers import RecruitmentNoticeSerializer
+from recruitment_notice.serializers import RecruitmentNoticeSerializer, RecruitmentNoticeDetailSerializer
 
 
 class RecruitmentNoticeView(APIView):
@@ -28,7 +28,7 @@ class RecruitmentNoticeDetailView(APIView):
 
     def get(self, request, pk, format=None):
         recruitment_notice_info = self.get_object(pk)
-        serializer = RecruitmentNoticeSerializer(recruitment_notice_info)
+        serializer = RecruitmentNoticeDetailSerializer(recruitment_notice_info)
         return Response(serializer.data)
 
     def patch(self, request, pk):

@@ -5,4 +5,9 @@ from .models import Company
 class CompanySerializer(ModelSerializer):
     class Meta:
         model = Company
-        fields = '__all__'
+        fields = [
+            'id',
+            'company_name',
+            'nation',
+            'area'
+        ]

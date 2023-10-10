@@ -20,7 +20,7 @@ class RecruitmentNoticeSerializer(serializers.ModelSerializer):
             'recruitment_potion',
             'recruitment_compensation',
             'recruitment_content',
-            'skill',
+            'skill'
         ]
 
     def to_representation(self, instance):
@@ -28,6 +28,60 @@ class RecruitmentNoticeSerializer(serializers.ModelSerializer):
         representation.pop('company', None)  # GET 응답에서 company ID 필드를 제거
         return representation
 
+    class RecruitmentNoticeSerializer(serializers.ModelSerializer):
+        company_name = serializers.CharField(source='company.company_name', read_only=True)
+        nation = serializers.CharField(source='company.nation', read_only=True)
+        area = serializers.CharField(source='company.area', read_only=True)
+
+        class Meta:
+            model = Recruitment_Notice
+            fields = [
+                'id',  # 또는 'recruitment_notice_id': serializers.IntegerField(source='id', read_only=True)
+                'company_name',
+                'nation',
+                'area',
+                'company',  # POST를 위해 필요
+                'recruitment_potion',
+                'recruitment_compensation',
+                'recruitment_content',
+                'skill'
+            ]
+
+        def to_representation(self, instance):
+            representation = super().to_representation(instance)
+            representation.pop('company', None)  # GET 응답에서 company ID 필드를 제거
+            return representation
+
+
+class RecruitmentNoticeDetailSerializer(serializers.ModelSerializer):
+    company_name = serializers.CharField(source='company.company_name', read_only=True)
+    nation = serializers.CharField(source='company.nation', read_only=True)
+    area = serializers.CharField(source='company.area', read_only=True)
+    other_recruitment_notices = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Recruitment_Notice
+        fields = [
+            'id',  # 또는 'recruitment_notice_id': serializers.IntegerField(source='id', read_only=True)
+            'company_name',
+            'nation',
+            'area',
+            'company',  # POST를 위해 필요
+            'recruitment_potion',
+            'recruitment_compensation',
+            'recruitment_content',
+            'skill',
+            'other_recruitment_notices'
+        ]
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation.pop('company', None)  # GET 응답에서 company ID 필드를 제거
+        return representation
+
+    def get_other_recruitment_notices(self, obj):
+        other_recruitment_notices = Recruitment_Notice.objects.filter(company=obj.company).exclude(id=obj.id)
+        return [notice.id for notice in other_recruitment_notices]
 
 # class RecruitmentNoticeSerializer(serializers.ModelSerializer):
 #     company = CompanySerializer()
