@@ -7,7 +7,7 @@ class CompanySerializer(ModelSerializer):
         model = Company
         fields = [
             'id',
-            'company_name',
+            'name',
             'nation',
             'area'
         ]
@@ -18,7 +18,7 @@ class CreateCompanySerializer(ModelSerializer):
         model = Company
         fields = [
             'id',
-            'company_name',
+            'name',
             'nation',
             'area'
         ]

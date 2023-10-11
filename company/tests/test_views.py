@@ -1,6 +1,5 @@
 from rest_framework import status
 from rest_framework.test import APITestCase
-
 from company.models import Company
 
 
@@ -9,7 +8,7 @@ class CompanyTest(APITestCase):
         # Arrange
         url = '/api/v1/company'
         data = {
-            'company_name': '원티드',
+            'name': '원티드',
             'nation': '한국',
             'area': '서울'
         }
@@ -23,6 +22,6 @@ class CompanyTest(APITestCase):
 
         company = Company.objects.get()
         self.assertEqual(response_json['id'], company.id)
-        self.assertEqual(response_json['company_name'], company.company_name)
+        self.assertEqual(response_json['name'], company.name)
         self.assertEqual(response_json['nation'], company.nation)
         self.assertEqual(response_json['area'], company.area)
