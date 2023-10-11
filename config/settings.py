@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "company",
     "recruitment_notice",
     "recruitment_support",
+    "account",
 ]
 
 MIDDLEWARE = [

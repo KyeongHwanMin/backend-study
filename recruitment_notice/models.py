@@ -12,4 +12,4 @@ class RecruitmentNotice(models.Model):
     modified_at = models.DateTimeField(auto_now=True, help_text="수정 날짜")
 
     class Meta:
-        db_table = "recruitment_notice"
+        db_table = "recruitmentNotice"
