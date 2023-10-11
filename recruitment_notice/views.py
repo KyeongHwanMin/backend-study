@@ -3,18 +3,19 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from recruitment_notice.models import RecruitmentNotice
-from recruitment_notice.serializers import RecruitmentNoticeSerializer, RecruitmentNoticeDetailSerializer
+from recruitment_notice.serializers import RecruitmentNoticeWriteSerializer, RecruitmentNoticeUpdateSerializer, \
+    RecruitmentNoticeListSerializer
 
 
 class RecruitmentNoticeView(APIView):
     def get(self, request):
         qs = RecruitmentNotice.objects.all()
-        serializer = RecruitmentNoticeSerializer(qs, many=True)
+        serializer = RecruitmentNoticeListSerializer(qs, many=True)
         return Response(serializer.data)
 
     def post(self, request):
 
-        serializer = RecruitmentNoticeSerializer(data=request.data)
+        serializer = RecruitmentNoticeWriteSerializer(data=request.data)
 
         if serializer.is_valid():
             serializer.save()
@@ -23,18 +24,21 @@ class RecruitmentNoticeView(APIView):
 
 
 class RecruitmentNoticeDetailView(APIView):
+
     def get_object(self, pk):
         return get_object_or_404(RecruitmentNotice, pk=pk)
 
     def get(self, request, pk, format=None):
         recruitment_notice_info = self.get_object(pk)
-        serializer = RecruitmentNoticeDetailSerializer(recruitment_notice_info)
+        serializer = RecruitmentNoticeWriteSerializer(recruitment_notice_info)
         return Response(serializer.data)
 
     def patch(self, request, pk):
         recruitment_notice_info = self.get_object(pk)
-        serializer = RecruitmentNoticeSerializer(recruitment_notice_info, data=request.data, partial=True)
+
+        serializer = RecruitmentNoticeUpdateSerializer(recruitment_notice_info, data=request.data, partial=True)
         if serializer.is_valid():
+            print(serializer.validated_data)
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
