@@ -44,7 +44,7 @@ class RecruitmentNoticeDetailView(APIView):
     def get(self, request, pk, format=None):
         recruitment_notice_info = self.get_object(pk)
         serializer = RecruitmentNoticeDetailSerializer(recruitment_notice_info)
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
     def patch(self, request, pk):
         recruitment_notice_info = self.get_object(pk)
