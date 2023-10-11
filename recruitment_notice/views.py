@@ -1,15 +1,28 @@
+from django.db.models import Q
 from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from recruitment_notice.models import RecruitmentNotice
 from recruitment_notice.serializers import RecruitmentNoticeWriteSerializer, RecruitmentNoticeUpdateSerializer, \
-    RecruitmentNoticeListSerializer
+    RecruitmentNoticeListSerializer, RecruitmentNoticeDetailSerializer
 
 
 class RecruitmentNoticeView(APIView):
     def get(self, request):
-        qs = RecruitmentNotice.objects.all()
+
+        search = request.query_params.get('search','')
+        if search:
+            qs = RecruitmentNotice.objects.filter(
+                Q(position__icontains=search) |
+                Q(content__icontains=search) |
+                Q(skill__icontains=search) |
+                Q(company__name__icontains=search) |
+                Q(company__nation__icontains=search) |
+                Q(company__area__icontains=search)
+            )
+        else:
+            qs = RecruitmentNotice.objects.all()
         serializer = RecruitmentNoticeListSerializer(qs, many=True)
         return Response(serializer.data)
 
@@ -30,7 +43,7 @@ class RecruitmentNoticeDetailView(APIView):
 
     def get(self, request, pk, format=None):
         recruitment_notice_info = self.get_object(pk)
-        serializer = RecruitmentNoticeWriteSerializer(recruitment_notice_info)
+        serializer = RecruitmentNoticeDetailSerializer(recruitment_notice_info)
         return Response(serializer.data)
 
     def patch(self, request, pk):

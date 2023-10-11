@@ -9,14 +9,16 @@ from recruitment_support.serializers import RecruitmentSupportSerializer
 
 
 class RecruitementSupportView(APIView):
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
     def get(self, request):
         qs = Support.objects.filter(user=request.user)
         serializer = RecruitmentSupportSerializer(qs, many=True)
         return Response(serializer.data)
+
     def post(self, request):
         data = request.data
         data['user'] = request.user.id
+        print(request.user)
         serializer = RecruitmentSupportSerializer(data=data)
 
         if serializer.is_valid():

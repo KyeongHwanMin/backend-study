@@ -4,7 +4,9 @@ from recruitment_support.models import Support
 
 class RecruitmentSupportSerializer(serializers.ModelSerializer):
 
-
     class Meta:
         model = Support
-        fields = ['recruitment_notice', 'user']
+        fields = [
+            'user',
+            'recruitment_notice'
+        ]
