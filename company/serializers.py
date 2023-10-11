@@ -5,20 +5,10 @@ from .models import Company
 class CompanySerializer(ModelSerializer):
     class Meta:
         model = Company
-        fields = [
-            'id',
-            'name',
-            'nation',
-            'area'
-        ]
+        fields = ["id", "name", "nation", "area"]
 
 
 class CreateCompanySerializer(ModelSerializer):
     class Meta:
         model = Company
-        fields = [
-            'id',
-            'name',
-            'nation',
-            'area'
-        ]
+        fields = ["id", "name", "nation", "area"]

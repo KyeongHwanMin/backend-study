@@ -17,7 +17,7 @@ class RecruitementSupportView(APIView):
 
     def post(self, request):
         data = request.data
-        data['user'] = request.user.id
+        data["user"] = request.user.id
         print(request.user)
         serializer = RecruitmentSupportSerializer(data=data)
 
@@ -25,4 +25,3 @@ class RecruitementSupportView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-

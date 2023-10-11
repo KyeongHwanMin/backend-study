@@ -4,22 +4,25 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from recruitment_notice.models import RecruitmentNotice
-from recruitment_notice.serializers import RecruitmentNoticeWriteSerializer, RecruitmentNoticeUpdateSerializer, \
-    RecruitmentNoticeListSerializer, RecruitmentNoticeDetailSerializer
+from recruitment_notice.serializers import (
+    RecruitmentNoticeWriteSerializer,
+    RecruitmentNoticeUpdateSerializer,
+    RecruitmentNoticeListSerializer,
+    RecruitmentNoticeDetailSerializer,
+)
 
 
 class RecruitmentNoticeView(APIView):
     def get(self, request):
-
-        search = request.query_params.get('search','')
+        search = request.query_params.get("search", "")
         if search:
             qs = RecruitmentNotice.objects.filter(
-                Q(position__icontains=search) |
-                Q(content__icontains=search) |
-                Q(skill__icontains=search) |
-                Q(company__name__icontains=search) |
-                Q(company__nation__icontains=search) |
-                Q(company__area__icontains=search)
+                Q(position__icontains=search)
+                | Q(content__icontains=search)
+                | Q(skill__icontains=search)
+                | Q(company__name__icontains=search)
+                | Q(company__nation__icontains=search)
+                | Q(company__area__icontains=search)
             )
         else:
             qs = RecruitmentNotice.objects.all()
@@ -27,7 +30,6 @@ class RecruitmentNoticeView(APIView):
         return Response(serializer.data)
 
     def post(self, request):
-
         serializer = RecruitmentNoticeWriteSerializer(data=request.data)
 
         if serializer.is_valid():
@@ -37,7 +39,6 @@ class RecruitmentNoticeView(APIView):
 
 
 class RecruitmentNoticeDetailView(APIView):
-
     def get_object(self, pk):
         return get_object_or_404(RecruitmentNotice, pk=pk)
 
@@ -49,7 +50,9 @@ class RecruitmentNoticeDetailView(APIView):
     def patch(self, request, pk):
         recruitment_notice_info = self.get_object(pk)
 
-        serializer = RecruitmentNoticeUpdateSerializer(recruitment_notice_info, data=request.data, partial=True)
+        serializer = RecruitmentNoticeUpdateSerializer(
+            recruitment_notice_info, data=request.data, partial=True
+        )
         if serializer.is_valid():
             print(serializer.validated_data)
             serializer.save()
