@@ -27,7 +27,7 @@ class RecruitmentNoticeView(APIView):
         else:
             qs = RecruitmentNotice.objects.all()
         serializer = RecruitmentNoticeListSerializer(qs, many=True)
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
     def post(self, request):
         serializer = RecruitmentNoticeWriteSerializer(data=request.data)
@@ -54,7 +54,6 @@ class RecruitmentNoticeDetailView(APIView):
             recruitment_notice_info, data=request.data, partial=True
         )
         if serializer.is_valid():
-            print(serializer.validated_data)
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
