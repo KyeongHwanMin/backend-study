@@ -341,8 +341,7 @@ Quit the server with CONTROL-C.
 ### 채용
 [채용공고 등록]
  ``` bash
-python manage.py test recruitment_notice.tests.test_views.RecruitmentNoticeTest.test_create_recr
-uitmentnotice
+python manage.py test recruitment_notice.tests.test_views.RecruitmentNoticeTest.test_create_recruitmentnotice
 ```
 [채용공고 수정]
  ``` bash
