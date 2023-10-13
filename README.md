@@ -4,20 +4,18 @@
 - Pyenv(https://github.com/pyenv/pyenv)
 
 ## 프로젝트 스펙 정보
-- Python 3.11.x
+- Python 3.12.x
 - Django 4.0.x
 - djangorestframework 3.14.x
 
 ## 개발 환경 세팅
 ```bash
 # python 설치
-pyenv install 3.11.6
+pyenv install 3.12.0
 # 가상환경 설치
-pyenv virtualenv 3.11.6 3.11.6_wanted_pre_onboarding_backend
-# 가상환경 경로 진입시 자동 활성화 설정
-pyenv local 3.11.6_wanted_pre_onboarding_backend .
+python -m venv venv
 # 가상환경 활성화
-pyenv version 3.11.6_wanted_pre_onboarding_backend
+venv/Scripts/activate
 # 의존성 설치
 pip install -r requirements.txt
 # 데이터베이스 마이그레이션
